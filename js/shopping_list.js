@@ -25,4 +25,16 @@ class ShoppingList {
         + ' to be passed as a parameter.');
     }
   }
+
+  render() {
+    /*const liStrings = this.items.map(function(item){
+      return item.render();
+    }).join('');
+    console.log(liStrings);*/
+    let liStrings = '';
+    for (let i=0; i<this.items.length; i++){
+      liStrings = liStrings.concat(this.items[i].render());
+    }
+    return `<ul>${liStrings}</ul>`;
+  }
 }

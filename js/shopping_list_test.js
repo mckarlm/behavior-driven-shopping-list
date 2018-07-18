@@ -83,7 +83,7 @@ describe('Test ShoppingListItem class', function () {
     });
 
     it('should have a render() method that returns an HTML formatted string', function () {
-      expect(methodToDo.render()).to.be.equal('<li class="completed_[is_done]"><span>one</span> <span>two</span></li>');
+      expect(methodToDo.render()).to.be.equal('<li class="completed_false"><span>one</span> <span>two</span></li>');
     });
   });
 });
@@ -124,18 +124,21 @@ describe('Test ShoppingList class', function () {
         expect(() => shoppingList.addItem('banana')).to.throw(TypeError);
       });
     });
-
+    
     describe('Test removeItem method', function () {
-
+      const chickenFeet = new ShoppingListItem('Chicken feet', 'People eat these?');
+      const pineapplePizza = new ShoppingListItem('Pineapple Pizza', '"The good stuff."');
+      const veggiePizza = new ShoppingListItem('Veggie Pizza', '"The terrible stuff."');
+      
       it('should have a removeItem method', function () {
         expect(shoppingList.removeItem).to.be.a('function');
       });
-
+      
       it('removeItem should remove ShoppingListItem from the property items', function () {
         shoppingList.removeItem(banana);
         expect(shoppingList.items).to.not.include(banana);
       });
-
+      
       it('should invoke removeItem without a parameter and remove the last item in the ShoppingList', function () {
         const newShoppingList = new ShoppingList();
         const apple = new ShoppingListItem('apple', 'keeps doctors away');
@@ -153,24 +156,30 @@ describe('Test ShoppingList class', function () {
 
       it('should throw an error if parameter of removeItem does not exist in "items"',
         function () {
-          const chickenFeet = new ShoppingListItem('Chicken feet',
-            'People eat these?');
           expect(() => emptyShoppingList.removeItem(chickenFeet))
             .to.throw(TypeError);
         });
 
       it('should throw an error, if item passed is not in "items"', function () {
-        const pineapplePizza = new ShoppingListItem('Pineapple Pizza',
-          '"The good stuff."');
-        const veggiePizza = new ShoppingListItem('Veggie Pizza',
-          '"The terrible stuff."');
         emptyShoppingList.addItem(pineapplePizza);
         expect(() => emptyShoppingList.removeItem(veggiePizza))
           .to.throw(TypeError);
       });
     });
-    describe('Test render method', function() {
-      
+    describe('Test render method', function () {
+      const veggiePizza = new ShoppingListItem('Veggie Pizza', '"The terrible stuff."');
+      it('render should be a function', function () {
+        expect(emptyShoppingList.render).to.be.a('function');
+      });
+
+      it('should return an HTML formatted string from "Pineapple Pizza" item.', function () {
+        expect(emptyShoppingList.render()).to.be.equal('<ul><li class="completed_false"><span>Pineapple Pizza</span> <span>"The good stuff."</span></li></ul>');
+      });
+
+      it('should return same HTML formatted string that also includes "Veggie Pizza"', function () {
+        emptyShoppingList.addItem(veggiePizza);
+        expect(emptyShoppingList.render()).to.be.equal('<ul><li class="completed_false"><span>Pineapple Pizza</span> <span>"The good stuff."</span></li><li class="completed_false"><span>Veggie Pizza</span> <span>"The terrible stuff."</span></li></ul>');
+      });
     });
   });
 });
