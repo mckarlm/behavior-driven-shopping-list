@@ -87,75 +87,90 @@ describe('Test ShoppingListItem class', function () {
     });
   });
 });
-    describe('Test ShoppingList class', function () {
-      const shoppingListClass = new ShoppingList();
-    
-      it('ShoppingList should be a class', function () {
-        expect(shoppingListClass).to.be.instanceof(ShoppingList);
+describe('Test ShoppingList class', function () {
+  const shoppingList = new ShoppingList();
+
+  it('ShoppingList should be a class', function () {
+    expect(shoppingList).to.be.instanceof(ShoppingList);
+  });
+
+  it('constructor should have a property of items', function () {
+    expect(shoppingList).has.own.property('items');
+  });
+
+  it('should return value of items', function () {
+    expect(shoppingList.items).to.be.an('array').that.is.empty;
+  });
+
+  describe('Test ShoppingList methods', function () {
+    const banana = new ShoppingListItem('banana', 'delicious and nutritious');
+    const emptyShoppingList = new ShoppingList();
+    describe('Test addItem method', function () {
+
+      it('should have an addItem method', function () {
+        (shoppingList.addItem).should.be.a('function');
       });
-    
-      it('constructor should have a property of items', function () {
-        expect(shoppingListClass).has.own.property(items);
+
+      it('addItem should add the ShoppingListItem to the items array', function () {
+        shoppingList.addItem(banana);
+        (shoppingList.items).should.contain(banana);
       });
-      
-      it('should return value of items', function(){
-        expect(shoppingListClass).should.equal([]);
+
+      it('expect ShoppingListItem being passed in to be a ShoppingListItem', function () {
+        expect(shoppingList.items[0]).to.be.instanceof(ShoppingListItem);
       });
-      
-      describe('Test ShoppingList methods',function(){
-        const itemOnShoppingList = new ShoppingListItem('banana', 'delicious and nutritious');
-        const thirdShoppingList = new ShoppingList();
 
-        it('should have an addItem method', function(){
-          (shoppingListClass.addItem).should.be.a('function');
-        });
-        
-        it('addItem should add the ShoppingListItem to the property items', function(){
-          shoppingListClass.addItem(itemOnShoppingList);
-          (shoppingListClass.items).should.contain(itemOnShoppingList);
-        });
-        
-        it('expect ShoppingListItem being passed in to be a ShoppingListItem', function(){
-          expect(shoppingListClass.items[0]).to.be.instanceof(itemOnShoppingList);
-        });
-
-        it('should throw an error if item being passed is not a ShoppingListItem', function(){
-          expect(()=>shoppingListClass.addItem('itemOnShoppingList')).to.throw(TypeError);
-        });
-
-        it('should have a removeItem method', function(){
-          expect(shoppingListClass.removeItem).to.be.a('function');
-        });
-
-        it('removeItem should remove ShoppingListItem from the property items', function(){
-          shoppingListClass.removeItem(itemOnShoppingList);
-          expect(shoppingListClass.items).to.not.include(itemOnShoppingList);
-        });
-
-        it('should invoke removeItem without a parameter and remove the last item in the ShoppingList', function(){
-          const newShoppingList = new ShoppingList();
-          const apple = new ShoppingListItem('apple', 'keeps doctors away');
-          const stackOfPancakes = new ShoppingListItem('stack of pancakes', 'why does the grocery store sell it like this?');
-          newShoppingList.addItem(apple);
-          newShoppingList.addItem(stackOfPancakes);
-          newShoppingList.removeItem();
-          expect(shoppingListClass.items).to.not.include(stackOfPancakes);
-        });
-        
-        it('should invoke removeItem without a parameter, while the property "items" is empty', function(){
-          thirdShoppingList.removeItem();
-          expect(shoppingListClass.items).to.be.equal([]);
-        });
-
-        it('should throw an error if parameter of removeItem does not exist in "items"', function(){
-          const chickenFeet = new ShoppingListItem('Chicken feet', 'People eat these?');
-          expect(()=>thirdShoppingList.removeItem(chickenFeet)).to.throw(TypeError);
-        });
-
-        it('', function(){
-          const pineapplePizza = new ShoppingListItem('Pineapple Pizza', '"The good stuff."');
-          thirdShoppingList.addItem(pineapplePizza);
-          expect(()=>thirdShoppingList.removeItem(veggiePizza)).to.throw(TypeError);
-        });
+      it('should throw an error if item being passed is not a ShoppingListItem', function () {
+        expect(() => shoppingList.addItem('banana')).to.throw(TypeError);
       });
     });
+
+    describe('Test removeItem method', function () {
+
+      it('should have a removeItem method', function () {
+        expect(shoppingList.removeItem).to.be.a('function');
+      });
+
+      it('removeItem should remove ShoppingListItem from the property items', function () {
+        shoppingList.removeItem(banana);
+        expect(shoppingList.items).to.not.include(banana);
+      });
+
+      it('should invoke removeItem without a parameter and remove the last item in the ShoppingList', function () {
+        const newShoppingList = new ShoppingList();
+        const apple = new ShoppingListItem('apple', 'keeps doctors away');
+        const stackOfPancakes = new ShoppingListItem('stack of pancakes', 'why does the grocery store sell it like this?');
+        newShoppingList.addItem(apple);
+        newShoppingList.addItem(stackOfPancakes);
+        newShoppingList.removeItem();
+        expect(shoppingList.items).to.not.include(stackOfPancakes);
+      });
+
+      it('should call removeItem without a parameter and "items" is empty', function () {
+        emptyShoppingList.removeItem();
+        expect(emptyShoppingList.items).to.be.an('array').that.is.empty;
+      });
+
+      it('should throw an error if parameter of removeItem does not exist in "items"',
+        function () {
+          const chickenFeet = new ShoppingListItem('Chicken feet',
+            'People eat these?');
+          expect(() => emptyShoppingList.removeItem(chickenFeet))
+            .to.throw(TypeError);
+        });
+
+      it('should throw an error, if item passed is not in "items"', function () {
+        const pineapplePizza = new ShoppingListItem('Pineapple Pizza',
+          '"The good stuff."');
+        const veggiePizza = new ShoppingListItem('Veggie Pizza',
+          '"The terrible stuff."');
+        emptyShoppingList.addItem(pineapplePizza);
+        expect(() => emptyShoppingList.removeItem(veggiePizza))
+          .to.throw(TypeError);
+      });
+    });
+    describe('Test render method', function() {
+      
+    });
+  });
+});
