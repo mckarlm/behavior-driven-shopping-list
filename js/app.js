@@ -31,6 +31,7 @@
   }
 
   const removeItemButtonClicked = function (event) {
+    console.log(event);
     let itemProperties = event.target.parentNode.outerText.split(' ');
     let index = -1;
     
@@ -40,11 +41,11 @@
       }
     }
 
-   
+    if (index > -1){
     shoppingListInstance.removeItem(shoppingListInstance.items[index]);
-    console.log(shoppingListInstance.items)
     contentDiv.innerHTML = shoppingListInstance.render(); 
-
+    }
+//    console.log(shoppingListInstance.items)
   }
    
 
