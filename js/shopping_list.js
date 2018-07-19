@@ -35,6 +35,11 @@ class ShoppingList {
     for (let i=0; i<this.items.length; i++){
       liStrings = liStrings.concat(this.items[i].render());
     }
-    return `<ul>${liStrings}</ul>`;
+
+    if(liStrings === ''){
+      return '';
+    } else {
+      return `<h3>Current List</h3><ul>${liStrings}</ul>`;
+    }
   }
 }

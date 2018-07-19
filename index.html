@@ -5,13 +5,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>Behavior Driven Shopping List</title>
+  <h1>Simple Shopping List Maker</h1>
 </head>
 
 <body>
   <form>
-    <input type='text' name='title'>
-    <input type='text' name='description'>
+    <input type='text' name='title' placeholder='List item'>
+    <input type='text' name='description' placeholder='Item description'><div id='error'></div>
   </form>
   <button id='add_shopping_list_item_button' onclick="add_to_shopping_list()">Add to Shopping List</button>
   <div id='content'></div> 
