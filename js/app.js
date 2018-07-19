@@ -9,6 +9,12 @@
   let error = false;
 
   const add_to_shopping_list = function () {
+    if(shoppingListInstance.title === ''){
+      shoppingListInstance.title = shoppingListInstance.titleElement.value;
+      shoppingListInstance.titleElement.value = '';
+      shoppingListInstance.titleElement.style.display = 'none';
+    }
+
     let titleInput = titleTextBox[0].value;
     let descriptionInput = descripTextBox[0].value;
 
